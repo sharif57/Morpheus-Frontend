@@ -195,7 +195,7 @@ export default function VerifyOTP() {
 
               <div className="mt-4 text-center text-sm text-white">
                 <Link
-                  href="/login"
+                  href="/auth/login"
                   className="text-[#4ecde6] hover:underline font-medium"
                 >
                   Back to Login
