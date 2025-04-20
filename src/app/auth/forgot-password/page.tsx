@@ -13,7 +13,7 @@ export default function ForgotPassword() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle password reset logic here
-    router.push("/auth/login")
+    router.push("/auth/verify-otp")
     console.log({ email })
     // In a real app, you would send a reset email here
   }
@@ -32,7 +32,7 @@ export default function ForgotPassword() {
         <div className="container mx-auto px-4 py-16 md:py-24 lg:py-56 font-[Montserrat]">
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16">
             <div className="w-full max-w-md bg-[#003842] rounded-lg shadow-xl p-8">
-              <h1 className="text-[40px] font-semibold text-white text-center mb-6">Forgot Password</h1>
+              <h1 className="lg:text-[40px] text-2xl font-semibold text-white text-center mb-6">Forgot Password</h1>
 
             
                   <p className="text-white text-sm mb-6 text-center">

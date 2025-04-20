@@ -7,19 +7,35 @@ import Link from "next/link"
 import { Eye, EyeOff } from "lucide-react"
 import { useRouter } from "next/navigation"
 
-export default function Login() {
+export default function SignUp() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle login logic here
-    console.log({ email, password, rememberMe })
-    // For demo purposes, we'll just redirect to home
-    router.push("/")
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      alert("Passwords don't match")
+      return
+    }
+
+    setIsLoading(true)
+
+    // Handle signup logic here
+    console.log({ email, password })
+
+    // Simulate API call and redirect to OTP verification
+    setTimeout(() => {
+      setIsLoading(false)
+      // Redirect to OTP verification page with email as query parameter
+      router.push(`/verify-otp?email=${encodeURIComponent(email)}`)
+    }, 1000)
   }
 
   return (
@@ -35,9 +51,8 @@ export default function Login() {
       >
         <div className="container mx-auto px-4 py-16 md:py-24 lg:py-56">
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16">
-            {/* Login Form */}
             <div className="w-full max-w-md bg-[#003842] rounded-lg shadow-xl p-8">
-              <h1 className="text-2xl font-semibold text-white text-center mb-6">Login</h1>
+              <h1 className="text-2xl font-semibold text-white text-center mb-6">Sign Up</h1>
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="space-y-2">
@@ -65,7 +80,7 @@ export default function Login() {
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter your password..."
+                      placeholder="Create a password..."
                       className="w-full px-3 py-2 bg-[#003842] border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4ecde6] focus:border-transparent"
                       required
                     />
@@ -79,38 +94,43 @@ export default function Login() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
+                <div className="space-y-2">
+                  <label htmlFor="confirmPassword" className="block text-sm text-white">
+                    Confirm Password
+                  </label>
+                  <div className="relative">
                     <input
-                      id="remember"
-                      type="checkbox"
-                      checked={rememberMe}
-                      onChange={(e) => setRememberMe(e.target.checked)}
-                      className="h-4 w-4 text-[#4ecde6] focus:ring-[#4ecde6] border-gray-600 rounded bg-[#003842]"
+                      id="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="Confirm your password..."
+                      className="w-full px-3 py-2 bg-[#003842] border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4ecde6] focus:border-transparent"
+                      required
                     />
-                    <label htmlFor="remember" className="ml-2 block text-sm text-white">
-                      Remember
-                    </label>
-                  </div>
-                  <div className="text-sm">
-                    <Link href="/auth/forgot-password" className="text-white hover:underline">
-                      Forgot Password?
-                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
+                    >
+                      {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-2 px-4 bg-[#4ecde6] hover:bg-[#3db9d1] text-[#003842] font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4ecde6] transition-colors"
+                  disabled={isLoading}
+                  className="w-full py-2 px-4 bg-[#4ecde6] hover:bg-[#3db9d1] text-[#003842] font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4ecde6] transition-colors disabled:opacity-70"
                 >
-                  Login
+                  {isLoading ? "Creating Account..." : "Create Account"}
                 </button>
               </form>
 
               <div className="mt-6 text-center text-sm text-white">
-                Don&apos;t have account?{" "}
-                <Link href="/auth/signup" className="text-[#4ecde6] hover:underline font-medium">
-                  Sign Up Now
+                Already have an account?{" "}
+                <Link href="/auth/login" className="text-[#4ecde6] hover:underline font-medium">
+                  Login
                 </Link>
               </div>
             </div>
