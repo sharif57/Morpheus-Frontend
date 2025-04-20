@@ -8,10 +8,10 @@ import { usePathname } from "next/navigation";
 export default function Navbar() {
   const pathname = usePathname()
   console.log("Pathname:", pathname)
-  if (pathname === "/auth/login" || pathname === "/auth/signup") { 
+  if (pathname === "/auth/login" || pathname === "/auth/forgot-password") { 
     return null; 
   }
-  
+
   return (
     <header
       className={"w-full top-0 fixed z-50 transition-all duration-300 py-4   "}
