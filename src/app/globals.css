@@ -13,7 +13,15 @@
   display: none; /* Chrome, Safari and Opera */
 }
 
+.no-scrollbar {
+  /* Hide scrollbar for Firefox */
+  scrollbar-width: none;
+}
 
+/* Hide scrollbar for Chrome, Safari, and Edge */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 
 @theme inline {
   --color-background: var(--background);

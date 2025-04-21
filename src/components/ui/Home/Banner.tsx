@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 export default function Banner() {
@@ -14,7 +15,7 @@ export default function Banner() {
           backgroundSize: "auto 100%",
         }}
       >
-        <div className="container mx-auto px-4 py-16 md:py-24 lg:py-56 " >
+        <div className="container mx-auto px-4 py-16 md:py-24 lg:py-56 ">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 lg:gap-16">
             {/* Left Section: Text and Button */}
             <div className="w-full md:w-1/2 space-y-6">
@@ -27,10 +28,12 @@ export default function Banner() {
                 Harness the wisdom of business books with a personalized AI
                 assistant designed just for you
               </p>
-              <button className="mt-4 bg-[#33CDF0] cursor-pointer font-[Montserrat] hover:bg-[#54D5F2] text-teal-900 font-medium px-8 py-3 rounded-md transition-colors flex items-center gap-2 group">
-                TRY MORPHEUS
-                <ArrowUpRight className="size-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </button>
+              <Link href={"/chat"}>
+                <button className="mt-4 bg-[#33CDF0] cursor-pointer font-[Montserrat] hover:bg-[#54D5F2] text-teal-900 font-medium px-8 py-3 rounded-md transition-colors flex items-center gap-2 group">
+                  TRY MORPHEUS
+                  <ArrowUpRight className="size-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </button>
+              </Link>
             </div>
 
             {/* Right Section: Illustration */}

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Search } from "lucide-react";
 
 interface ChatSidebarProps {
   isMobileMenuOpen: boolean;

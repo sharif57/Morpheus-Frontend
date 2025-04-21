@@ -104,7 +104,7 @@ export default function Home() {
         <div className="h-4"></div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 md:p-6">
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 no-scrollbar">
           {messages.map((message, index) => (
             <ChatMessage key={index} message={message} />
           ))}
