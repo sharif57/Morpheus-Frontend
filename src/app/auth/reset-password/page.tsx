@@ -2,10 +2,10 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import { Eye, EyeOff } from "lucide-react"
-import { useParams, useRouter } from "next/navigation"
+import {  useRouter } from "next/navigation"
 
 export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState("")
@@ -14,21 +14,21 @@ export default function ResetPassword() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
-  const [, setToken] = useState("")
+  // const [, setToken] = useState("")
   const router = useRouter()
-  const searchParams = useParams()
+  // const searchParams = useParams()
 
-  useEffect(() => {
-    // Get token from URL query parameter if available
-    const tokenParam = ("token")
-    if (tokenParam) {
-      setToken(tokenParam)
-    } else {
-      // If no token is provided, we could redirect to forgot-password
-      // For demo purposes, we'll just set a dummy token
-      setToken("demo-token")
-    }
-  }, [searchParams])
+  // useEffect(() => {
+  //   // Get token from URL query parameter if available
+  //   const tokenParam = ("token")
+  //   if (tokenParam) {
+  //     setToken(tokenParam)
+  //   } else {
+  //     // If no token is provided, we could redirect to forgot-password
+  //     // For demo purposes, we'll just set a dummy token
+  //     setToken("demo-token")
+  //   }
+  // }, [searchParams])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
