@@ -52,7 +52,7 @@ export default function ChatMessage({ message }: MessageProps) {
           </div>
         ) : (
           <div
-            className="prose prose-invert max-w-none"
+            className="prose prose-invert max-w-none "
             dangerouslySetInnerHTML={{ __html: message.content }}
           />
         )}
