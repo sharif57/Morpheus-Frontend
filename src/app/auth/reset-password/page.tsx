@@ -5,7 +5,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Eye, EyeOff } from "lucide-react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 
 export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState("")
@@ -14,13 +14,13 @@ export default function ResetPassword() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
-  const [token, setToken] = useState("")
+  const [, setToken] = useState("")
   const router = useRouter()
-  const searchParams = useSearchParams()
+  const searchParams = useParams()
 
   useEffect(() => {
     // Get token from URL query parameter if available
-    const tokenParam = searchParams.get("token")
+    const tokenParam = ("token")
     if (tokenParam) {
       setToken(tokenParam)
     } else {

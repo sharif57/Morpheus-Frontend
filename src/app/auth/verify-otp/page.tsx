@@ -4,7 +4,7 @@ import type React from "react";
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import {  useRouter, useParams } from "next/navigation";
 
 export default function VerifyOTP() {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
@@ -14,11 +14,11 @@ export default function VerifyOTP() {
   const [timeLeft, setTimeLeft] = useState<number>(60);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useParams();
 
   useEffect(() => {
     // Get email from URL query parameter if available
-    const emailParam = searchParams.get("email");
+    const emailParam = ("email");
     if (emailParam) {
       setEmail(emailParam);
     }

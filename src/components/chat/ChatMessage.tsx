@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { useState, useEffect } from "react"
+import Image from "next/image";
+import { useState, useEffect } from "react";
 
 interface MessageProps {
   message: {
-    role: "user" | "assistant"
-    content: string
-  }
+    role: "user" | "assistant";
+    content: string;
+  };
 }
 
 export default function ChatMessage({ message }: MessageProps) {
-  const [isTyping, setIsTyping] = useState(false)
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     if (message.role === "assistant" && message.content.length > 100) {
-      setIsTyping(true)
+      setIsTyping(true);
       const timer = setTimeout(() => {
-        setIsTyping(false)
-      }, 1000)
+        setIsTyping(false);
+      }, 1000);
 
-      return () => clearTimeout(timer)
+      return () => clearTimeout(timer);
     }
-  }, [message])
+  }, [message]);
 
   if (message.role === "user") {
     return (
@@ -31,7 +31,7 @@ export default function ChatMessage({ message }: MessageProps) {
           <p>{message.content}</p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -40,9 +40,9 @@ export default function ChatMessage({ message }: MessageProps) {
         <Image
           src="/logo.svg"
           alt="assistant"
-            width={40}
-            height={40}
-            className="w-10 h-10 rounded-full mb-2"
+          width={40}
+          height={40}
+          className="w-10 h-10 rounded-full mb-2"
         />
         {isTyping ? (
           <div className="flex space-x-2 items-center">
@@ -51,9 +51,12 @@ export default function ChatMessage({ message }: MessageProps) {
             <div className="w-2 h-2 rounded-full bg-gray-400 animate-pulse delay-150"></div>
           </div>
         ) : (
-          <div className="prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: message.content }} />
+          <div
+            className="prose prose-invert max-w-none"
+            dangerouslySetInnerHTML={{ __html: message.content }}
+          />
         )}
       </div>
     </div>
-  )
+  );
 }
