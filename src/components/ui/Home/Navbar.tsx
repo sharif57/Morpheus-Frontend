@@ -6,10 +6,17 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-  const pathname = usePathname()
-  console.log("Pathname:", pathname)
-  if (pathname === "/auth/login" || pathname === "/auth/forgot-password" || pathname === "/auth/verify-otp" || pathname === "/auth/signup" || pathname === "/auth/reset-password") { 
-    return null; 
+  const pathname = usePathname();
+  console.log("Pathname:", pathname);
+  if (
+    pathname === "/auth/login" ||
+    pathname === "/auth/forgot-password" ||
+    pathname === "/auth/verify-otp" ||
+    pathname === "/auth/signup" ||
+    pathname === "/auth/reset-password" 
+    // pathname === "/profile/my-profile"
+  ) {
+    return null;
   }
 
   return (
