@@ -13,8 +13,8 @@ export default function Navbar() {
     pathname === "/auth/forgot-password" ||
     pathname === "/auth/verify-otp" ||
     pathname === "/auth/signup" ||
-    pathname === "/auth/reset-password" 
-    // pathname === "/profile/my-profile"
+    pathname === "/auth/reset-password" ||
+    pathname === "/chat"
   ) {
     return null;
   }

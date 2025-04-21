@@ -27,7 +27,7 @@ export default function Banner() {
                 Harness the wisdom of business books with a personalized AI
                 assistant designed just for you
               </p>
-              <button className="mt-4 bg-[#33CDF0] font-[Montserrat] hover:bg-[#54D5F2] text-teal-900 font-medium px-8 py-3 rounded-md transition-colors flex items-center gap-2 group">
+              <button className="mt-4 bg-[#33CDF0] cursor-pointer font-[Montserrat] hover:bg-[#54D5F2] text-teal-900 font-medium px-8 py-3 rounded-md transition-colors flex items-center gap-2 group">
                 TRY MORPHEUS
                 <ArrowUpRight className="size-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </button>
