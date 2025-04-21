@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 interface ChatSidebarProps {
   isMobileMenuOpen: boolean;
@@ -177,16 +178,23 @@ export default function ChatSidebar({
                                 // Handle edit
                                 setActiveMenu(null);
                               }}
+                              // onClick={() => {
+                              //   alert("Edit clicked");
+                              // }}
                               className="w-full text-left px-3 py-2 text-sm hover:bg-[#005163]"
                             >
                               Edit
                             </button>
                             <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                // Handle delete
-                                setActiveMenu(null);
+                              // onClick={(e) => {
+                              //   e.stopPropagation();
+                              //   // Handle delete
+                              //   setActiveMenu(null);
+                              // }}
+                              onClick={() => {
+                                toast.success('Chat deleted successfully!');
                               }}
+                              
                               className="w-full text-left px-3 py-2 text-sm hover:bg-[#005163] text-red-400"
                             >
                               Delete

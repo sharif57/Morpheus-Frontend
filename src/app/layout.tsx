@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import {  Geist_Mono, Montserrat } from "next/font/google";
+import { Geist_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/ui/Home/Navbar";
+import { Toaster } from "sonner";
 
 const geistSans = Montserrat({
   variable: "--font-montserrat-sans",
@@ -30,7 +31,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar/>
+        <Navbar />
+        <Toaster position="top-center" duration={1000} richColors />
         {children}
       </body>
     </html>
