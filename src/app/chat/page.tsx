@@ -124,7 +124,7 @@ export default function Home() {
             </div>
           </div>
         ) : (
-          <div className="flex-1 overflow-y-auto p-4 md:p-6">
+          <div className="flex-1 overflow-y-auto p-4 md:p-6 no-scrollbar" >
             {messages.slice(1).map((message, index) => (
               <ChatMessage key={index} message={message} />
             ))}
