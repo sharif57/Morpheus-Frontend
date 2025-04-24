@@ -133,8 +133,8 @@ export default function Home() {
         )}
 
         <div className="p-4 ">
-          <form onSubmit={handleSubmit} className="relative">
-            <input
+          <form  onSubmit={handleSubmit} className="relative " >
+            <input 
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
@@ -143,7 +143,7 @@ export default function Home() {
             />
             <button
               type="submit"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-[#0088A8] text-[#005163] hover:bg-opacity-80 transition-colors"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 mr-2 rounded-full bg-[#0088A8] text-[#005163] hover:bg-opacity-80 transition-colors"
             >
               <ArrowUp className="h-4 w-4 text-white" />
             </button>
