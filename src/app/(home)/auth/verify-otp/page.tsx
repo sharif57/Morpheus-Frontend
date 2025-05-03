@@ -2,11 +2,13 @@
 
 import type React from "react";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import Link from "next/link";
-import {  useRouter, useParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useVerifyEmailMutation } from "@/Redux/feature/authSlice";
+import { toast } from "sonner";
 
-export default function VerifyOTP() {
+ function VerifyOTP() {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [email, setEmail] = useState<string>("");
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
@@ -14,11 +16,15 @@ export default function VerifyOTP() {
   const [timeLeft, setTimeLeft] = useState<number>(60);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const router = useRouter();
-  const searchParams = useParams();
+  const searchParams = useSearchParams();
+  const userMail = searchParams.get("email") || ""; // Get email from URL query parameter
+  console.log(userMail, "userMail");
+
+  const [verifyEmail] = useVerifyEmailMutation();
 
   useEffect(() => {
     // Get email from URL query parameter if available
-    const emailParam = ("email");
+    const emailParam = "email";
     if (emailParam) {
       setEmail(emailParam);
     }
@@ -90,13 +96,42 @@ export default function VerifyOTP() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Check if OTP is complete
     if (otp.some((digit) => !digit)) {
       setError("Please enter the complete verification code");
       return;
+    }
+    try {
+      const otpCode = otp.join("");
+      console.log(otpCode, "otpCode");
+      const data = {
+        email: userMail,
+        otp: otpCode,
+      };
+      console.log(data, "data");
+      const res = await verifyEmail(data).unwrap()
+      toast.success(res.message || "OTP verified successfully!")
+      console.log(res,'res')
+    } catch (error) {
+      // Better error handling
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else if (
+        typeof error === "object" &&
+        error !== null &&
+        "data" in error &&
+        typeof error.data === "object" &&
+        error.data !== null &&
+        "message" in error.data
+      ) {
+        toast.error((error.data as { message: string }).message);
+      } else {
+        toast.error("Error verifying OTP. Please try again.");
+      }
+      console.error("Verification error:", error);
     }
 
     setIsVerifying(true);
@@ -107,7 +142,7 @@ export default function VerifyOTP() {
 
       // For demo purposes, we'll just redirect to home
       // In a real app, you would verify the OTP with your backend
-      router.push("/auth/reset-password");
+      router.push("/auth/login");
     }, 1500);
   };
 
@@ -206,5 +241,13 @@ export default function VerifyOTP() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function VerifyEmail() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyOTP />
+    </Suspense>
   );
 }

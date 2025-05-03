@@ -1,26 +1,41 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Eye, EyeOff } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
+import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useLoginMutation } from "@/Redux/feature/authSlice";
+import { toast } from "sonner";
 
 export default function Login() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle login logic here
-    console.log({ email, password, rememberMe })
-    // For demo purposes, we'll just redirect to home
-    router.push("/")
-  }
+  const [login] = useLoginMutation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await login({ email, password }).unwrap();
+      console.log(res);
+      toast.success(res.message || "Login successful!");
+      localStorage.setItem("token", res.access);
+      localStorage.setItem('session', res.session_id);
+      router.push("/");
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Error logging in. Please try again.";
+      toast.error(errorMessage);
+      console.error(error);
+    }
+  };
 
   return (
     <div>
@@ -37,7 +52,9 @@ export default function Login() {
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16">
             {/* Login Form */}
             <div className="w-full max-w-md bg-[#003842] rounded-lg shadow-xl p-8">
-              <h1 className="lg:text-[40px] text-2xl font-semibold text-white text-center mb-6">Login</h1>
+              <h1 className="lg:text-[40px] text-2xl font-semibold text-white text-center mb-6">
+                Login
+              </h1>
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="space-y-2">
@@ -56,7 +73,10 @@ export default function Login() {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="password" className="block text-sm text-white">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm text-white"
+                  >
                     Password
                   </label>
                   <div className="relative">
@@ -88,12 +108,18 @@ export default function Login() {
                       onChange={(e) => setRememberMe(e.target.checked)}
                       className="h-4 w-4 text-[#4ecde6] focus:ring-[#4ecde6] border-gray-600 rounded bg-[#003842]"
                     />
-                    <label htmlFor="remember" className="ml-2 block text-sm text-white">
+                    <label
+                      htmlFor="remember"
+                      className="ml-2 block text-sm text-white"
+                    >
                       Remember
                     </label>
                   </div>
                   <div className="text-sm">
-                    <Link href="/auth/forgot-password" className="text-white hover:underline">
+                    <Link
+                      href="/auth/forgot-password"
+                      className="text-white hover:underline"
+                    >
                       Forgot Password?
                     </Link>
                   </div>
@@ -109,7 +135,10 @@ export default function Login() {
 
               <div className="mt-6 text-center text-sm text-white">
                 Don&apos;t have account?{" "}
-                <Link href="/auth/signup" className="text-[#4ecde6] hover:underline font-medium">
+                <Link
+                  href="/auth/signup"
+                  className="text-[#4ecde6] hover:underline font-medium"
+                >
                   Sign Up Now
                 </Link>
               </div>
@@ -118,5 +147,5 @@ export default function Login() {
         </div>
       </main>
     </div>
-  )
+  );
 }

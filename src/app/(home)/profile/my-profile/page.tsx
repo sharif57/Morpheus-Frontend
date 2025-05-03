@@ -4,11 +4,17 @@ import type React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useUserProfileQuery } from "@/Redux/feature/userSlice";
+import Navbar from "@/components/ui/Home/Navbar";
 
 export default function MyProfile() {
+  const { data, isLoading } = useUserProfileQuery(undefined);
+
+  const IMAGE = process.env.NEXT_PUBLIC_API_KEY;
 
   return (
     <div>
+      <Navbar />
       <main
         className="min-h-screen  w-full bg-[#005163] text-white flex items-center justify-center"
         style={{
@@ -20,32 +26,32 @@ export default function MyProfile() {
       >
         <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 lg:py-24 font-[Montserrat]">
           <div className="flex flex-col items-center justify-center gap-8">
-            <div className="w-full max-w-[740px] bg-[#006A82] rounded-lg shadow-xl p-6 sm:p-8">
+            <div className="w-full max-w-[800px] bg-[#006A82] rounded-lg shadow-xl p-6 sm:p-8">
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
                 <div className="w-[250px] h-[240px] sm:w-[250px] sm:h-[300px] md:w-[300px] md:h-[370px] flex-shrink-0">
                   <Image
-                    src="/profile.png"
+                    src={`${IMAGE}/${data?.profile_pic}`}
                     height={370}
                     width={300}
                     alt="profile"
                     className="w-full h-full object-cover rounded-md"
                   />
                 </div>
-                <div className="flex flex-col gap-6 sm:gap-12 justify-center items-start">
+                <div className="flex flex-col gap-6 sm:gap-12 justify-center items-start ">
                   <div className="flex flex-col gap-1">
                     <h1 className="text-lg sm:text-xl md:text-[23px] font-medium">
                       Name:
                     </h1>
                     <p className="text-lg sm:text-xl md:text-[23px] font-medium text-[#E6F9FD]">
-                      Marvin McKinney
+                      {isLoading ? "Loading..." : data?.full_name}
                     </p>
                   </div>
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-1 ">
                     <h1 className="text-lg sm:text-xl md:text-[23px] font-medium">
                       Email:
                     </h1>
-                    <p className="text-lg sm:text-xl md:text-[23px] font-medium text-[#E6F9FD]">
-                      sharifmahamud@gmail.com
+                    <p className="text-lg sm:text-xl md:text-[23px]  font-medium text-[#E6F9FD] ">
+                      {isLoading ? "Loading..." : data?.email}
                     </p>
                   </div>
                   <Link href="/profile/edit-profile">

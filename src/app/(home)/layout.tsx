@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Montserrat } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/ui/Home/Navbar";
+import "../globals.css";
 import { Toaster } from "sonner";
+import Providers from "@/Providers/Providers";
 
 const geistSans = Montserrat({
   variable: "--font-montserrat-sans",
@@ -30,10 +30,13 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        cz-shortcut-listen="true"
       >
-        <Navbar />
-        <Toaster position="top-center" duration={1000} richColors />
-        {children}
+        <Providers>
+          {/* <Navbar /> */}
+          <Toaster position="top-center" duration={1000} richColors />
+          {children}
+        </Providers>
       </body>
     </html>
   );
