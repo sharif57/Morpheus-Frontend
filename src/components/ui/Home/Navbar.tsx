@@ -130,7 +130,7 @@ export default function Navbar() {
                       className="rounded-full"
                       width={100}
                       height={100}
-                      src={`${IMAGE}/${data.profile_pic}`}
+                      src={`${IMAGE}/${data?.profile_pic}`}
                       alt={data.full_name}
                     />
                     {/* <AvatarImage 
