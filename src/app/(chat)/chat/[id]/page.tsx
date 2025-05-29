@@ -346,7 +346,7 @@ export default function Home() {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Ask me anything about business..."
-              className="w-full bg-[#006A82] text-white placeholder-[#B0EBF9] rounded-md py-4 sm:py-6 lg:py-9 pl-4 pr-12 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#33CDF0]"
+              className="w-full bg-[#006A82] text-white placeholder-[#B0EBF9] rounded-md py-4 sm:py-6 lg:py-9 pl-4  pr-16 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#33CDF0]"
             />
             <button
               type="submit"
