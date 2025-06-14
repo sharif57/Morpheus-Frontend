@@ -188,6 +188,7 @@ import {
   useAskQuestionMutation,
   useUserChatsQuery,
 } from "@/Redux/feature/createSession";
+import { useUserProfileQuery } from "@/Redux/feature/userSlice";
 
 interface Message {
   role: "user" | "assistant";
@@ -208,6 +209,8 @@ export default function Home() {
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
   const [sessionId, setSessionId] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+    const { data: userData } = useUserProfileQuery(undefined);
+  
 
   // Fetch chat history
   const { data, isLoading: isChatHistoryLoading } = useUserChatsQuery(sessionId);
@@ -261,7 +264,8 @@ export default function Home() {
       // Send user message to the server
       const response = await askQuestion({
         session_id: sessionId,
-        question: inputValue.trim(),
+        query_text: inputValue.trim(),
+        email: userData?.email || "",
       }).unwrap();
 
       // Replace the placeholder with the actual response

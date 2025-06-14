@@ -41,16 +41,17 @@ export default function ChatSidebar({
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [activeSession, setActiveSession] = useState<string | null>(null);
   const [createSession] = useCreateSessionMutation();
-  const { data, isLoading } = useUserAllSessionsQuery(undefined);
   const { data: userData } = useUserProfileQuery(undefined);
+  const { data, isLoading } = useUserAllSessionsQuery({ email: userData?.email });
+  console.log(data,'sidebar data')
   const router = useRouter();
 
   const IMAGE = process.env.NEXT_PUBLIC_API_KEY;
 
   const handleSessionCreate = async () => {
     try {
-      const res = await createSession({}).unwrap();
-      localStorage.setItem("session", res.session_id);
+      const res = await createSession({email: userData?.email}).unwrap();
+      localStorage.setItem("session", res.session_id || null);
       toast.success(res.message || "Session created successfully");
       setIsMobileMenuOpen(false);
       window.location.href = "/chat"; // This will automatically cause a page reload
@@ -58,14 +59,14 @@ export default function ChatSidebar({
       console.error("Error creating session:", error);
       toast.error("Failed to create session");
     }
-  };
+  };  
 
   const handleSessionSelect = (sessionId: string) => {
     setActiveSession(sessionId);
     localStorage.setItem("session", sessionId);
     setIsMobileMenuOpen(false);
   };
-
+  
   const handleLogout = async () => {
     toast.success("Logout successful!");
     localStorage.removeItem("token"); // Remove the token from local storage
@@ -186,7 +187,6 @@ export default function ChatSidebar({
               <div className="p-4 text-center">Loading sessions...</div>
             ) : (
               <>
-                {/* Today */}
                 {data?.today?.length > 0 && (
                   <div className="p-4">
                     <h2 className="text-sm font-medium mb-2">Today</h2>
@@ -203,7 +203,6 @@ export default function ChatSidebar({
                                 : "hover:bg-[#005163]"
                             }`}
                           >
-                            {/* <span>{session.title}</span> */}
                             <Link href={`/chat/${session.session_id}`}>
                               {session.title}
                             </Link>
@@ -272,7 +271,6 @@ export default function ChatSidebar({
                   </div>
                 )}
 
-                {/* Yesterday */}
                 {data?.yesterday?.length > 0 && (
                   <div className="p-4">
                     <h2 className="text-sm font-medium mb-2">Yesterday</h2>
@@ -292,7 +290,6 @@ export default function ChatSidebar({
                                 : "hover:bg-[#005163]"
                             }`}
                           >
-                            {/* <span>{session.title}</span>{" "} */}
                             <Link href={`/chat/${session.session_id}`}>
                               {session.title}
                             </Link>
@@ -361,7 +358,6 @@ export default function ChatSidebar({
                   </div>
                 )}
 
-                {/* Previous 7 Days */}
                 {data?.["Previous 7 Days"]?.length > 0 && (
                   <div className="p-4">
                     <h2 className="text-sm font-medium mb-2">
@@ -384,7 +380,6 @@ export default function ChatSidebar({
                                   : "hover:bg-[#005163]"
                               }`}
                             >
-                              {/* <span>{session.title}</span> */}
                               <Link href={`/chat/${session.session_id}`}>
                                 {session.title}
                               </Link>
@@ -461,7 +456,6 @@ export default function ChatSidebar({
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              {/* <Button variant="outline">Open</Button> */}
               <div className="p-4 border-t cursor-pointer hover:bg-[#006A82] border-b border-[#006A82] flex items-center">
                 <div className="w-8 h-8 rounded-full bg-gray-400 mr-3 overflow-hidden">
                   <Image
